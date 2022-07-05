@@ -6,6 +6,7 @@ using BookStore.Models.ViewModels;
 namespace BookStore_API.Controllers
 {
     [ApiController]
+    [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
         UserRepository _repository = new UserRepository();

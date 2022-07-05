@@ -32,9 +32,14 @@ namespace BookStore_API.Controllers
         [Route("{id}")]
         [HttpGet]
         [ProducesResponseType(typeof(BookModel), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(NotFoundResult), (int)HttpStatusCode.NotFound)]
         public IActionResult GetBooks(int id)
         {
+            
             var book = _bookRepository.GetBook(id);
+            if(book == null)
+                return NotFound();
+
             BookModel bookModel = new BookModel(book);
 
             return Ok(bookModel);
