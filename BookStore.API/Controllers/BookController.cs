@@ -22,7 +22,7 @@ namespace BookStore_API.Controllers
 
             ListResponse<BookModel> listResponse = new ListResponse<BookModel>()
             {
-                Result = books.Result.Select(c => new BookModel(c)).ToList(),
+                Records = books.Records.Select(c => new BookModel(c)).ToList(),
                 TotalRecords = books.TotalRecords,
             };
 

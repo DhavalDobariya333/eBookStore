@@ -22,7 +22,7 @@ namespace BookStore_API.Controllers
             var publishers = _publisherRepository.GetPublishers(pageIndex, pageSize, keyword);
             ListResponse<PublisherModel> listResponse = new ListResponse<PublisherModel>()
             {
-                Result = publishers.Result.Select(c => new PublisherModel(c)).ToList(),
+                Records = publishers.Records.Select(c => new PublisherModel(c)).ToList(),
                 TotalRecords = publishers.TotalRecords,
             };
 

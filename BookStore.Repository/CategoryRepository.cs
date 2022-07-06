@@ -19,7 +19,7 @@ namespace BookStore.Repository
 
             return new ListResponse<Category>()
             {
-                Result = categories,
+                Records = categories,
                 TotalRecords = totalRecord,
             };
         }

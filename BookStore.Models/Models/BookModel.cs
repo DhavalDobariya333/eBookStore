@@ -16,7 +16,7 @@ namespace BookStore.Models.Models
             Name = book.Name;
             Price = book.Price;
             Description = book.Description;
-            //Base64image = book.Base64image;
+            Base64image = book.Base64image;
             Categoryid = book.Categoryid;
             Publisherid = book.Publisherid;
             Quantity = book.Quantity;

@@ -22,7 +22,7 @@ namespace BookStore_API.Controllers
            var categories = _categoryRepository.GetCategories(pageIndex, pageSize, keyword);
            ListResponse<CategoryModel> listResponse = new ListResponse<CategoryModel>()
             {
-                Result = categories.Result.Select(c => new CategoryModel(c)).ToList(),
+                Records = categories.Records.Select(c => new CategoryModel(c)).ToList(),
                 TotalRecords = categories.TotalRecords,
             };
 
