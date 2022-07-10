@@ -10,25 +10,60 @@ using System.Net;
 namespace BookStore.API.Controllers
 {
     [ApiController]
-    [Route("cart")]
+    [Route("api/[controller]")]
     public class CartController : Controller
     {
         private readonly CartRepository _cartRepository = new CartRepository();
 
+
+        //[HttpGet]
+        //[Route("list")]
+        //public IActionResult GetCartItem(string keyword)
+        //{
+        //    List<Cart> carts =  _cartRepository.GetCartItemsList(keyword);
+        //    IEnumerable<CartModel> cartModel = carts.Select(c => new CartModel(c));
+        //    return Ok(cartModel);
+        //}
         [HttpGet]
         [Route("list")]
-        public IActionResult GetCartItem(string keyword)
+        public IActionResult GetCartItems(int UserId, int pageIndex = 1, int pageSize = 10)
         {
-            List<Cart> carts =  _cartRepository.GetCartItems(keyword);
-            IEnumerable<CartModel> cartModel = carts.Select(c => new CartModel(c));
-            return Ok(cartModel);
+            ListResponse<Cart> carts = _cartRepository.GetCartItems(UserId, pageIndex, pageSize);
+            ListResponse<GetCartModel> cartModels = new ListResponse<GetCartModel>()
+            {
+                Records = carts.Records.Select(c => new GetCartModel(c.Id, c.Userid, new BookModel(c.Book), c.Quantity)).ToList(),
+                TotalRecords = carts.TotalRecords
+            };
+            return Ok(cartModels);
         }
+
+        //[HttpPost]
+        //[Route("add")]
+        //[ProducesResponseType(typeof(CartModel), (int)HttpStatusCode.OK)]
+        //[ProducesResponseType(typeof(BadRequestObjectResult), (int)HttpStatusCode.BadRequest)]
+        //public IActionResult AddCart(CartModel model)
+        //{
+        //    if (model == null)
+        //        return BadRequest();
+
+        //    Cart cart = new Cart()
+        //    {
+        //        Id = model.Id,
+        //        Quantity = 1,
+        //        Bookid = model.Bookid,
+        //        Userid = model.Userid,
+        //    };
+        //    cart = _cartRepository.AddCart(cart);
+
+        //    CartModel cartmodel = new CartModel(cart);
+
+        //    return Ok(cartmodel);
+        //}
+
 
         [HttpPost]
         [Route("add")]
-        [ProducesResponseType(typeof(CartModel), (int)HttpStatusCode.OK)]
-        [ProducesResponseType(typeof(BadRequestObjectResult), (int)HttpStatusCode.BadRequest)]
-        public IActionResult AddCart(CartModel model)
+        public ActionResult<CartModel> AddCart(CartModel model)
         {
             if (model == null)
                 return BadRequest();
@@ -38,13 +73,14 @@ namespace BookStore.API.Controllers
                 Id = model.Id,
                 Quantity = 1,
                 Bookid = model.Bookid,
-                Userid = model.Userid,
+                Userid = model.Userid
             };
             cart = _cartRepository.AddCart(cart);
-
-            CartModel cartmodel = new CartModel(cart);
-
-            return Ok(cartmodel);
+            if (cart == null)
+            {
+                return StatusCode(500);
+            }
+            return new CartModel(cart);
         }
 
         [HttpPut]
@@ -65,8 +101,7 @@ namespace BookStore.API.Controllers
             };
             cart = _cartRepository.UpdateCart(cart);
 
-            CartModel cartmodel = new CartModel(cart);
-            return Ok(cartmodel);
+            return Ok(new CartModel(cart));
         }
 
         [HttpDelete]

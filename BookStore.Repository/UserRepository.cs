@@ -29,7 +29,7 @@ namespace BookStore.Repository
                 Password = model.Password,
                 Firstname = model.Firstname,
                 Lastname = model.Lastname,
-                Roleid = model.Roleid,
+                RoleId = model.Roleid,
             };
 
             var entry = _context.Users.Add(user);

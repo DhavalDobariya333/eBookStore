@@ -12,14 +12,14 @@ namespace BookStore.Models.Models
         public BookModel() { }
         public BookModel(Book book) 
         {
-            Id = book.Id;
-            Name = book.Name;
-            Price = book.Price;
-            Description = book.Description;
-            Base64image = book.Base64image;
-            Categoryid = book.Categoryid;
-            Publisherid = book.Publisherid;
-            Quantity = book.Quantity;
+            this.Id = book.Id;
+            this.Name = book.Name;
+            this.Price = book.Price;
+            this.Description = book.Description;
+            this.Base64image = book.Base64image;
+            this.Categoryid = book.Categoryid;
+            this.Publisherid = book.Publisherid;
+            this.Quantity = book.Quantity;
         }
 
 

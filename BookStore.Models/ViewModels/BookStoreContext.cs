@@ -232,11 +232,11 @@ namespace BookStore.Models.ViewModels
                     .HasMaxLength(100)
                     .HasColumnName("password");
 
-                entity.Property(e => e.Roleid).HasColumnName("roleid");
+                entity.Property(e => e.RoleId).HasColumnName("roleid");
 
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.Users)
-                    .HasForeignKey(d => d.Roleid)
+                    .HasForeignKey(d => d.RoleId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_role");
             });
